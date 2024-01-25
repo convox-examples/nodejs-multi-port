@@ -1,0 +1,25 @@
+resources:
+  main:
+    type: mysql
+    options:
+      version: 8.0.35
+      storage: 20
+
+services:
+  web:
+    environment:
+      - PORT=3000
+      - SECONDARY_PORT=4200
+    domain: ${HOST}
+    internal: true
+    build: .
+    port: 3000
+    ports:
+     - 4200
+    health:
+      grace: 30
+      interval: 15
+      path: /health
+      timeout: 30
+    resources:
+      - main
